@@ -6,3 +6,4 @@ exports.accountUnlockTime = 600000
 exports.addTxUrl = '/addOneTx'
 exports.unlockUrl = '/unlock'
 exports.getTxCountUrl = '/getTxCounts'
+exports.getArverageBlockTime = '/getArverageBlockTime'

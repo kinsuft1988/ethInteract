@@ -37,6 +37,14 @@ function getAccountTxCounts(account) {
     return web3.eth.getTransactionCount(account);
 }
 
+function getblock(numer) {
+    return web3.eth.getblock(numer);
+}
+
+function getBlockNumber() {
+    return web3.eth.getBlockNumber()
+}
+
 function main() {
     const Koa = require('koa');
     const app = new Koa();
@@ -55,6 +63,14 @@ function main() {
         } else if (ctx.request.path == config.getTxCountUrl) {
             data = await getAccountTxCounts(config.defaultAccount)
             ctx.response.body = data
+        } else if (ctx.request.path == config.getArverageBlockTime) {
+            number = await  getBlockNumber()
+            blockGenesis = await  getblock(0)
+            blockCurrent = await  getblock(number)
+
+            var time = (blockCurrent.timestamp - blockGenesis.timestamp) / number
+
+            ctx.response.body = time
         }
     };
 
