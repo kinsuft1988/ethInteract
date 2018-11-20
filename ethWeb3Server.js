@@ -38,7 +38,7 @@ function getAccountTxCounts(account) {
 }
 
 function getblock(numer) {
-    return web3.eth.getblock(numer);
+    return web3.eth.getBlock(numer);
 }
 
 function getBlockNumber() {
@@ -65,8 +65,9 @@ function main() {
             ctx.response.body = data
         } else if (ctx.request.path == config.getArverageBlockTime) {
             number = await  getBlockNumber()
+            console.log("number:" + number)
             blockGenesis = await  getblock(0)
-            blockCurrent = await  getblock(number)
+            blockCurrent = await  getblock(number - 1)
 
             var time = (blockCurrent.timestamp - blockGenesis.timestamp) / number
 
