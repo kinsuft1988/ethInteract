@@ -17,13 +17,15 @@ function sendTransaction(fromAccount, toAccount, valueString) {
         from: fromAccount,
         to: toAccount,
         value: valueString
-    }, '').on('transactionHash', function (hash) {
-        console.log("hash-----")
-    }).on('receipt', function (receipt) {
-        console.log("receipt-----")
-    }).on('confirmation', function (confirmationNumber, receipt) {
-        console.log("confirmationNumner:" + confirmationNumber)
-    }).on('error', console.error); // If a out of gas error, the second parameter is the receipt.
+    }, '')
+    // .on('transactionHash', function (hash) {
+    //     console.log("hash-----")
+    // }).on('receipt', function (receipt) {
+    //     console.log("receipt-----")
+    // }).on('confirmation', function (confirmationNumber, receipt) {
+    //     console.log("confirmationNumner:" + confirmationNumber)
+    // })
+        .on('error', console.error); // If a out of gas error, the second parameter is the receipt.
 }
 
 function generateTransactionParams() {
@@ -65,13 +67,21 @@ function main() {
             ctx.response.body = data
         } else if (ctx.request.path == config.getArverageBlockTime) {
             number = await  getBlockNumber()
-            console.log("number:" + number)
-            blockGenesis = await  getblock(0)
-            blockCurrent = await  getblock(number - 1)
+            if (number < 10) {
+                ctx.response.body = 0
+            } else {
+                console.log("number:" + number)
+                blockGenesis = await  getblock(1)
+                blockCurrent = await  getblock(number - 2)
 
-            var time = (blockCurrent.timestamp - blockGenesis.timestamp) / number
+                var time = (blockCurrent.timestamp - blockGenesis.timestamp) / number
 
-            ctx.response.body = time
+                console.log("blockCurrent.timestamp:" + blockCurrent.timestamp)
+                console.log("blockGenesis.timestamp:" + blockGenesis.timestamp)
+                console.log("block number:" + number)
+
+                ctx.response.body = time
+            }
         } else if (ctx.request.path == config.getBlockNumber) {
             number = await getBlockNumber()
             ctx.response.body = number
