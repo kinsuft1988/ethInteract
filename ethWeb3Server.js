@@ -72,6 +72,9 @@ function main() {
             var time = (blockCurrent.timestamp - blockGenesis.timestamp) / number
 
             ctx.response.body = time
+        } else if (ctx.request.path == config.getBlockNumber) {
+            number = await getBlockNumber()
+            ctx.response.body = number
         }
     };
 
