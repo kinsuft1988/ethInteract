@@ -58,8 +58,11 @@ function main() {
             ctx.response.body = 'ok';
         } else if (ctx.request.path == config.addMuTxUrl) {
             var prarams = generateTransactionParams()
-            for (var i = 0; i < 20; i++) {
-                sendTransaction(prarams.fromAccount, prarams.toAccount, prarams.valueString)
+            for (var i = 0; i < 50; i++) {
+                setTimeout(function () {
+                    "use strict";
+                    sendTransaction(prarams.fromAccount, prarams.toAccount, prarams.valueString)
+                }, i * 20);
             }
             ctx.response.body = 'ok';
         } else if (ctx.request.path == config.unlockUrl) {
