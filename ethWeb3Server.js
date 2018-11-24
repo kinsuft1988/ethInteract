@@ -56,6 +56,12 @@ function main() {
             var prarams = generateTransactionParams()
             sendTransaction(prarams.fromAccount, prarams.toAccount, prarams.valueString)
             ctx.response.body = 'ok';
+        } else if (ctx.request.path == config.addMuTxUrl) {
+            var prarams = generateTransactionParams()
+            for (var i = 0; i < 20; i++) {
+                sendTransaction(prarams.fromAccount, prarams.toAccount, prarams.valueString)
+            }
+            ctx.response.body = 'ok';
         } else if (ctx.request.path == config.unlockUrl) {
             unlock(config.defaultAccount, () => {
                 "use strict";
